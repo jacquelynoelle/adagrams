@@ -67,6 +67,7 @@ end
 def score_word(word)
   score = 0
   word.upcase.split("").each do |letter|
+    
     if "AEIOULNRST".include? letter
       score += 1
     elsif "DG".include? letter
@@ -87,4 +88,29 @@ def score_word(word)
     score += 8
   end
   return score
+end
+
+
+def highest_score_from(words)
+  highest = {
+        word: "",
+        score: 0
+  }
+
+  words.each do |word|
+    current_score = score_word(word)
+    if current_score > highest[:score]
+      highest[:score] = current_score
+      highest[:word] = word
+    elsif current_score == highest[:score]
+      if word.length == 10 && highest[:word].length != 10
+        highest[:score] = current_score
+        highest[:word] = word
+      elsif word.length < highest[:word].length && highest[:word].length != 10
+        highest[:score] = current_score
+        highest[:word] = word
+      end
+    end
+  end
+  return highest
 end
