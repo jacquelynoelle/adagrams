@@ -47,11 +47,9 @@ end
 def uses_available_letters?(input, letters_in_hand)
 
   word = input.upcase.split("")
-  puts "#{word}"
   word.each do |letter|
     # found = false
     # while !found
-    puts "before deletion #{letters_in_hand}"
       if letters_in_hand.include?(letter)
         # letters_in_hand.delete(letter)
         letters_in_hand.delete_at(letters_in_hand.index letter)
@@ -62,7 +60,31 @@ def uses_available_letters?(input, letters_in_hand)
         return false
       end
     # end
-    puts "after delition #{letters_in_hand}"
   end
   return true
+end
+
+def score_word(word)
+  score = 0
+  word.upcase.split("").each do |letter|
+    if "AEIOULNRST".include? letter
+      score += 1
+    elsif "DG".include? letter
+      score += 2
+    elsif "BCMP".include? letter
+      score += 3
+    elsif "FHVWY".include? letter
+      score += 4
+    elsif "K".include? letter
+      score += 5
+    elsif "JX".include? letter
+      score += 8
+    elsif "QZ".include? letter
+      score += 10
+    end
+  end
+  if word.length >= 7
+    score += 8
+  end
+  return score
 end
