@@ -1,4 +1,5 @@
 require 'pry'
+require 'csv'
 
 def draw_letters
 
@@ -45,29 +46,27 @@ def draw_letters
 end
 
 def uses_available_letters?(input, letters_in_hand)
+  new_letters_in_hand = letters_in_hand.map do |letter|
+    letter
+  end
 
   word = input.upcase.split("")
   word.each do |letter|
-    # found = false
-    # while !found
-      if letters_in_hand.include?(letter)
-        # letters_in_hand.delete(letter)
-        letters_in_hand.delete_at(letters_in_hand.index letter)
-        # binding.pry
-        ####takes out all of the letters
-        # found = true
+
+      if new_letters_in_hand.include?(letter)
+        new_letters_in_hand.delete_at(new_letters_in_hand.index letter)
       else
         return false
       end
-    # end
   end
   return true
+
 end
 
 def score_word(word)
   score = 0
   word.upcase.split("").each do |letter|
-    
+
     if "AEIOULNRST".include? letter
       score += 1
     elsif "DG".include? letter
@@ -113,4 +112,18 @@ def highest_score_from(words)
     end
   end
   return highest
+end
+
+def is_in_english_dict?(input)
+  dictionary_words = CSV.open('assets/dictionary-english.csv', headers: true).map do |row|
+   row["Word"]
+  end
+
+  downcased_input = input.downcase
+  if dictionary_words.include? downcased_input
+    return true
+  else
+    return false
+  end
+
 end

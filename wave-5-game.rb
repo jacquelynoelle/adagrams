@@ -1,4 +1,5 @@
 require_relative 'lib/adagrams'
+require 'pry'
 
 def display_welcome_message
   puts "Welcome to Adagrams!"
@@ -71,7 +72,6 @@ def run_game
       end
       user_input_word = get_user_input
     end
-
     score = score_word(user_input_word)
     played_words << user_input_word
 
